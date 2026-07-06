@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Primer Mes ❤️</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Sacramento&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- ESTILOS GENERALES Y PALETA DE COLORES --- */
+        :root {
+            --rosa-pastel: #ffe5ec;
+            --rosa-medio: #ffc2d1;
+            --oro-rosa: #e8a598;
+            --blanco-crema: #fffbfb;
+            --texto-oscuro: #4a3f41;
+            --rojo-sutil: #ff85a1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--blanco-crema);
+            color: var(--texto-oscuro);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo de Corazones Flotantes iniciales (suben lento) */
+        #canvas-corazones {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* --- CLASES DE TRANSICIÓN (Efecto por partes) --- */
+        .seccion-oculta {
+            display: none !important;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .seccion-visible {
+            display: block !important;
+            animation: revelarEfecto 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes revelarEfecto {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- PORTADA (HERO) --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Sacramento', cursive;
+            font-size: 4.5rem;
+            color: var(--rojo-sutil);
+            margin-bottom: 10px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .hero p {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            animation: fadeInUp 1.5s ease-out 0.5s both;
+        }
+
+        /* Botones de acción */
+        .btn-accion {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            padding: 14px 32px;
+            background-color: transparent;
+            border: 2px solid var(--oro-rosa);
+            color: var(--texto-oscuro);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(232, 165, 152, 0.2);
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .btn-accion:hover {
+            background-color: var(--oro-rosa);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(232, 165, 152, 0.4);
+        }
+
+        .contenedor-centrado {
+            text-align: center;
+            width: 100%;
+            margin-top: 40px;
+        }
+
+        /* --- SECCIÓN GENERAL --- */
+        section {
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .titulo-seccion {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            color: var(--texto-oscuro);
+        }
+
+        .titulo-seccion::after {
+            content: '♥';
+            display: block;
+            font-size: 1.2rem;
+            color: var(--oro-rosa);
+            margin-top: 5px;
+        }
+
+        /* --- LÍNEA DEL TIEMPO --- */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background-color: var(--rosa-medio);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            position: relative;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-img {
+            width: 45%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-img:hover { transform: scale(1.03); }
+
+        .timeline-img img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .timeline-content {
+            width: 45%;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(74, 63, 65, 0.03);
+            border: 1px solid rgba(255, 194, 209, 0.3);
+        }
+
+        .timeline-date {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--oro-rosa);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .timeline-content h3 {
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .timeline-content p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.8;
+        }
+
+        /* --- LA CARTA VIRTUAL --- */
+        .contenedor-carta {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 320px;
+            margin-bottom: 30px;
+        }
+
+        .sobre {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background-color: var(--rosa-pastel);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .sobre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 130px solid var(--rosa-medio);
+            transform-origin: top;
+            transition: transform 0.5s ease 0.3s;
+            z-index: 3;
+        }
+
+        .sobre::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid rgba(255,255,255,0.4);
+            border-right: 160px solid rgba(255,255,255,0.4);
+            border-bottom: 110px solid rgba(255,255,255,0.2);
+            z-index: 2;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .sello-corazon {
+            position: absolute;
+            top: 110px;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--rojo-sutil);
+            z-index: 4;
+            transition: all 0.5s ease;
+        }
+
+        .hoja-carta {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            width: 290px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            z-index: 1;
+            transition: all 0.6s ease;
+            max-height: 180px;
+            overflow: hidden;
+        }
+
+        .hoja-carta p {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .sobre.abierto {
+            transform: translateY(60px);
+            cursor: default;
+        }
+
+        .sobre.abierto::before {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+
+        .sobre.abierto .sello-corazon {
+            opacity: 0;
+            transform: translate(-50%, -120%) scale(0);
+        }
+
+        .sobre.abierto .hoja-carta {
+            transform: translateY(-220px);
+            max-height: 1000px;
+            width: 340px;
+            left: -10px;
+            height: auto;
+            z-index: 5;
+            box-shadow: 0 20px 50px rgba(74, 63, 65, 0.15);
+            border: 1px solid var(--rosa-pastel);
+        }
+
+        /* --- JUEGO INTERACTIVO --- */
+        .seccion-juego {
+            text-align: center;
+            background-color: white;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 0 15px 40px rgba(255, 194, 209, 0.15);
+            border: 1px solid var(--rosa-pastel);
+            position: relative;
+        }
+
+        .pregunta {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .contenedor-botones {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            min-height: 80px;
+            position: relative;
+        }
+
+        .btn-juego {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.3s ease;
+        }
+
+        #btn-si {
+            background-color: var(--rojo-sutil);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 133, 161, 0.4);
+        }
+
+        #btn-si:hover {
+            transform: scale(1.1);
+            background-color: #ff6b8b;
+        }
+
+        #btn-no {
+            background-color: #e0e0e0;
+            color: #666;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- MODAL DE CELEBRACIÓN / REVELACIÓN FINAL --- */
+        .modal-celebracion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 251, 251, 0.95); /* Fondo crema claro sutilmente transparente */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .modal-celebracion.mostrar {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .contenido-modal {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 24px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(255, 133, 161, 0.2);
+            border: 2px solid var(--rosa-pastel);
+            transform: scale(0.8);
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            z-index: 105;
+        }
+
+        .modal-celebracion.mostrar .contenido-modal {
+            transform: scale(1);
+        }
+
+        /* Mensaje pedido por el usuario */
+        .contenido-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--texto-oscuro);
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 10px;
+        }
+        
+        .subtitulo-modal {
+            font-family: 'Sacramento', cursive;
+            font-size: 2.8rem;
+            color: var(--rojo-sutil);
+            margin-bottom: 25px;
+            display: block;
+        }
+
+        /* Contenedor central para poner su imagen */
+        .imagen-central-amor {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(74, 63, 65, 0.1);
+            margin-bottom: 25px;
+            border: 4px solid var(--blanco-crema);
+        }
+
+        .imagen-central-amor img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Sección de puras flores abajo de la imagen */
+        .jardin-flores {
+            font-size: 1.8rem;
+            letter-spacing: 5px;
+            margin-bottom: 25px;
+            animation: latidoSutil 2s infinite alternate;
+        }
+
+        /* Lluvia de corazones cayendo (Efecto Especial) */
+        .corazon-cayendo {
+            position: fixed;
+            top: -20px;
+            font-size: 1.5rem;
+            color: var(--rojo-sutil);
+            pointer-events: none;
+            z-index: 101;
+            animation: caerCorazon linear forwards;
+        }
+
+        /* --- KEYFRAMES --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes latidoSutil {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+        @keyframes caerCorazon {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3.2rem; }
+            .titulo-seccion { font-size: 1.8rem; }
+            .timeline::before { left: 20px; }
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                padding-left: 40px;
+            }
+            .timeline-img, .timeline-content { width: 100%; }
+            .timeline-img { margin-bottom: 15px; }
+            .timeline-img img { height: 200px; }
+            .sobre.abierto .hoja-carta { width: 300px; left: 10px; }
+            .contenedor-botones { flex-direction: column; gap: 20px; }
+            .contenido-modal h2 { font-size: 1.7rem; }
+            .subtitulo-modal { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-corazones"></canvas>
+
+    <header class="hero" id="sec-portada">
+        <h1>Nuestra historia en un click</h1>
+        <p>Para la niña que transformó mi mundo por completo</p>
+        <button class="btn-accion" onclick="revelarSeccion('sec-historia', 'sec-portada')">Descubrir nuestro amor</button>
+    </header>
+
+    <section id="sec-historia" class="seccion-oculta">
+        <h2 class="titulo-seccion">Nuestra Historia</h2>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&q=80&w=600" alt="Momento 1">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Finales del 2018</span>
+                    <h3>El día que todo comenzó</h3>
+                    <p>Fue una casualidad, pero la casualidad mas bonita que me pudo haber pasado, te conoci por un
+                        amigo, fue raro por que yo entraba a jugar jaja y alguien andaba peleando con mi amigo jajaja,
+                        empezamos a hablar y desde hay tuvimos una conexion increible, Te hacias la fuerte aunque eras muy amable.
+                    </p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&q=80&w=600" alt="Momento 2">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2019</span>
+                    <h3>Empezamos a hablar más</h3>
+                    <p>Los nervios me consumían, pero tu sonrisa hizo que todo el miedo desapareciera en un instante,
+                        yo no era de hablar mucho, muy poco podia hablarte, pero aún asi, a pesar de que no te hable, nunca
+                        perdimos conexion, no nos aburriamos y poco a poco empezamos a hacer mas cosas. Te convertiste en mi Mejor Amiga</p>
+                </div>
+            </div>
+
+             <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="4.png" alt="Momento 3">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Inicios del 2020</span>
+                    <h3>Conociendonos</h3>
+                    <p>Jaja, empece a hablarte mas por micro y siempre que te hablaba te quedabas quieta, me daba risa por que hablabas y
+                        cuando yo empezaba a hablarte te quedabas callada para escucharme y luego escribirnos por whatsapp.
+                    </p>
+                </div>
+            </div>
+
+      <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="5.jpeg" alt="Momento 4">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2021</span>
+                    <h3> Mi razón de ser contigo </h3>
+                    <p> Ya no solo era jugar por diversión, mi motivo de jugar te volviste tu, yo me habia aburrido del juego, pero siempre te veia
+                        y siempre sentia la necesidad de volver para estar a tu lado, siempre me sacabas una sonrisa y las risas nunca faltaban.
+                    </p>
+                </div>
+            </div>      
+            
+                  <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="6.jpeg" alt="Momento 5">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">5 de Julio del 2022</span>
+                    <h3> Reencontrarnos por los números</h3>
+                    <p> Te encontre Denuevo, por destinos de la vida, nos volvimos a hablar, nos empezamos a contar más cosas, no hablabamos mucho esta vez pero habia conexion que no se rompia, por mas que
+                        nos distanciaramos mas, siempre volviamos uno a otro, eso siempre me gusto de nuestra amistad.
+                    </p>
+                </div>
+            </div>
+
+             <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="7.jpeg" alt="Momento 6">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Mitades del 2023 a mitades del 2024</span>
+                    <h3>Arrepentimiento</h3>
+                    <p> Me arrepenti, la malogre y fue el tiempo que mas me arrepenti y el momento donde menos me querias recibir, pero aún asi lo hiciste, te agradezco mucho por eso
+                        Gracias por que por mas que me fui, siempre estuviste ahi para mi.
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="8.jpeg" alt="Momento 7">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025</span>
+                    <h3>Volver a intentarlo esta vez distinto</h3>
+                    <p> Volvimos a hablar, iniciando otra vez pero, esta vez era diferente, conocimos mas el lado del uno como del otro, cosas que no sabia verdaderamente de ti,
+                        las empece a aprender y me fui soltando mas contigo, como tu conmigo, desde ahi entendi que tambien como dijo sebastian yatra: Cuenta una leyenda, que todos nacemos
+                        con un hilo rojo, invisible, atado a la persona que amaremos por siempre, sin importar el tiempo, el lugar o las circunstancias, el hilo se podra estirar, contraer o enredar,
+                        pero jamas romperse. Empece a darme cuenta que lo que sentia no era mas que ser tu amigo, queria protegerte y empece por tratarte como mi hija o hermana aunque era una excusa jaja, por que tenia miedo a malograr lo nuestro.
+                </p>
+                    </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="1.png" alt="Momento 8">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">06 deJunio del 2026</span>
+                    <h3>Nuestro Inicio</h3>
+                    <p> Tocamos el tema indirectamente, y al final nos dimos cuenta que ambos sentiamos lo mismo y asi fue como empezamos a salir, aunque estemos a distancia,
+                        siempre seras tu mi razon de ser feliz y por la cual siempre te voy a elegir. Te amo mi Reina
+                </p>
+                    </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-img">
+                    <img src="2.png" alt="Momento 9">
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">06 de Julio del 2026</span>
+                    <h3>Primer Mes Juntos</h3>
+                    <p> Nuestro Primer Mes Juntos, Y para toda una vida Juntos, y como te dije arriba, siempre estuviste para mi, como tu dices que yo para ti, pero esa vez te falle y ya no lo repetire jamas, Siempre seras mi prioridad y la razón para siempre estar a tu lado, en las buenas o en las malas. Con todo mi Corazón Te puedo decir TE AMO MI VIDA❤️
+                </p>
+                    </div>
+            </div>
+
+        </div>
+
+        
+
+        <div class="contenedor-centrado">
+            <button class="btn-accion" onclick="revelarSeccion('sec-carta')">Hay algo más para ti...</button>
+        </div>
+    </section>
+
+    <section id="sec-carta" class="seccion-oculta" style="background-color: rgba(255, 229, 236, 0.2); border-radius: 30px;">
+        <h2 class="titulo-seccion">Una Carta Para Ti</h2>
+        <div class="contenedor-carta">
+            <div class="sobre" id="sobre-virtual" onclick="abrirCarta()">
+                <div class="sello-corazon"><i class="fa-solid fa-heart"></i></div>
+                <div class="hoja-carta">
+                    <p>
+                        Mi amor,<br><br>
+                        Escribir esto se queda corto para todo lo que siento por ti a diario. Gracias por ser mi refugio seguro, por tu paciencia infinita y por la hermosa forma en que iluminas mis días.<br><br>
+                        Te amo hoy, mañana y siempre. ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contenedor-centrado seccion-oculta" id="contenedor-btn-juego">
+            <button class="btn-accion" onclick="revelarSeccion('sec-juego')">Por último, una pregunta</button>
+        </div>
+    </section>
+
+    <section id="sec-juego" class="seccion-oculta">
+        <div class="seccion-juego">
+            <p class="pregunta">¿Me amas muchísimo? 🥺</p>
+            <div class="contenedor-botones">
+                <button class="btn-juego" id="btn-si" onclick="celebrar()">¡SÍ!</button>
+                <button class="btn-juego" id="btn-no" onmouseover="moverBotonNo()" onclick="moverBotonNo()">No</button>
+            </div>
+        </div>
+    </section>
+    <div class="modal-celebracion" id="modal-love">
+        <div class="contenido-modal">
+            <h2>Feliz 1 mes mi vida</h2>
+            <span class="subtitulo-modal">Gracias por hacerme muy feliz</span>
+            
+            <div class="imagen-central-amor">
+                <img src="3.png" alt="Nosotros">
+            </div>
+
+            <!-- Efecto de flores animadas vía Canvas en lugar de emojis -->
+            <div class="contenedor-flores-efecto">
+                <canvas id="jardin-flores-animado"></canvas>
+            </div>
+
+            <button class="btn-accion" onclick="cerrarModal()">Cerrar con una sonrisa</button>
+        </div>
+    </div>
+
+
+    <script>
+        /* --- DESPLIEGUE POR PARTES --- */
+        function revelarSeccion(idSiguiente, idActual = null) {
+            if (idActual === 'sec-portada') {
+                document.getElementById(idActual).style.display = 'none';
+            }
+            const siguiente = document.getElementById(idSiguiente);
+            siguiente.classList.remove('seccion-oculta');
+            siguiente.classList.add('seccion-visible');
+            setTimeout(() => {
+                siguiente.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        /* --- LOGICA DE LA CARTA --- */
+        function abrirCarta() {
+            const sobre = document.getElementById('sobre-virtual');
+            if (!sobre.classList.contains('abierto')) {
+                sobre.classList.add('abierto');
+                setTimeout(() => {
+                    const btnJuego = document.getElementById('contenedor-btn-juego');
+                    btnJuego.classList.remove('seccion-oculta');
+                    btnJuego.classList.add('seccion-visible');
+                }, 1200); 
+            }
+        }
+
+        /* --- BOTÓN "NO" ESCURRIDIZO --- */
+        function moverBotonNo() {
+            const btnNo = document.getElementById('btn-no');
+            const contenedor = btnNo.parentElement;
+            const anchoContenedor = contenedor.clientWidth;
+            const altoContenedor = 200; 
+            
+            const randomX = Math.floor(Math.random() * (anchoContenedor - btnNo.clientWidth)) - (anchoContenedor/2 - btnNo.clientWidth/2);
+            const randomY = Math.floor(Math.random() * altoContenedor) - 80;
+
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = `calc(50% - ${btnNo.clientWidth/2}px + ${randomX}px)`;
+            btnNo.style.top = `${randomY}px`;
+        }
+
+        /* --- EFECTO DE CORAZONES CAYENDO (LLUVIA CONTINUA) --- */
+        let intervaloCorazones;
+
+        function crearCorazonCayendo() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon-cayendo');
+            corazon.innerHTML = '❤️';
+            corazon.style.left = Math.random() * 100 + 'vw';
+            const tamaño = Math.random() * 15 + 15;
+            corazon.style.fontSize = tamaño + 'px';
+            const duracion = Math.random() * 2 + 2; 
+            corazon.style.animationDuration = duracion + 's';
+            corazon.style.opacity = Math.random() * 0.7 + 0.3;
+
+            document.body.appendChild(corazon);
+
+            setTimeout(() => {
+                corazon.remove();
+            }, duracion * 1000);
+        }
+
+        /* --- EFECTO DE JARDÍN DE FLORES ANIMADO --- */
+        const canvasFlores = document.getElementById('jardin-flores-animado');
+        const ctxFlores = canvasFlores.getContext('2d');
+        let listaFlores = [];
+        let idAnimacionFlores;
+
+        class Flor {
+            constructor() {
+                this.x = Math.random() * canvasFlores.width;
+                this.y = Math.random() * canvasFlores.height;
+                this.size = Math.random() * 4 + 4;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speedAngle = Math.random() * 0.02 - 0.01;
+                this.color = ['#ffb3c1', '#ff85a1', '#fbc4ab', '#ffccd5', '#e8a598'][Math.floor(Math.random() * 5)];
+                this.waveOffset = Math.random() * 100;
+            }
+            update() {
+                this.angle += this.speedAngle;
+                this.x += Math.sin(this.angle * 0.5) * 0.2;
+            }
+            draw() {
+                ctxFlores.save();
+                ctxFlores.translate(this.x, this.y);
+                ctxFlores.rotate(this.angle);
+                ctxFlores.fillStyle = this.color;
+                
+                // Dibujar pétalos estilizados
+                for (let i = 0; i < 5; i++) {
+                    ctxFlores.rotate(Math.PI * 2 / 5);
+                    ctxFlores.beginPath();
+                    ctxFlores.arc(0, -this.size, this.size, 0, Math.PI * 2);
+                    ctxFlores.fill();
+                }
+                // Centro de la flor
+                ctxFlores.beginPath();
+                ctxFlores.arc(0, 0, this.size * 0.6, 0, Math.PI * 2);
+                ctxFlores.fillStyle = '#fff3b0';
+                ctxFlores.fill();
+                ctxFlores.restore();
+            }
+        }
+
+        function iniciarEfectoFlores() {
+            canvasFlores.width = canvasFlores.parentElement.clientWidth;
+            canvasFlores.height = canvasFlores.parentElement.clientHeight;
+            listaFlores = [];
+            for (let i = 0; i < 20; i++) {
+                listaFlores.push(new Flor());
+            }
+            
+            function animar() {
+                ctxFlores.clearRect(0, 0, canvasFlores.width, canvasFlores.height);
+                listaFlores.forEach(f => {
+                    f.update();
+                    f.draw();
+                });
+                idAnimacionFlores = requestAnimationFrame(animar);
+            }
+            animar();
+        }
+
+        /* --- VENTANA DE CELEBRACIÓN --- */
+        function celebrar() {
+            document.getElementById('modal-love').classList.add('mostrar');
+            intervaloCorazones = setInterval(crearCorazonCayendo, 150);
+            iniciarEfectoFlores();
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-love').classList.remove('mostrar');
+            clearInterval(intervaloCorazones);
+            cancelAnimationFrame(idAnimacionFlores);
+        }
+
+        /* --- CORAZONES DE FONDO INICIALES (SUBEN) --- */
+        const canvas = document.getElementById('canvas-corazones');
+        const ctx = canvas.getContext('2d');
+        let particulas = [];
+
+        function ajustarCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', ajustarCanvas);
+        ajustarCanvas();
+
+        class Corazon {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + Math.random() * 100;
+                this.size = Math.random() * 8 + 5;
+                this.speedY = Math.random() * 0.5 + 0.2;
+                this.speedX = Math.sin(Math.random() * 2) * 0.2;
+                this.opacity = Math.random() * 0.4 + 0.1;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.y < -20) {
+                    this.y = canvas.height + 20;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#ff85a1';
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.bezierCurveTo(this.x - this.size/2, this.y - this.size/2, this.x - this.size, this.y + this.size/3, this.x, this.y + this.size);
+                ctx.bezierCurveTo(this.x + this.size, this.y + this.size/3, this.x + this.size/2, this.y - this.size/2, this.x, this.y);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 25; i++) particulas.push(new Corazon());
+        
+        function animarFondo() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particulas.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animarFondo);
+        }
+        animarFondo();
+    </script>
+</body>
+</html>
