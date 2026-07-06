@@ -402,7 +402,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(255, 251, 251, 0.95); /* Fondo crema claro sutilmente transparente */
+            background-color: rgba(255, 251, 251, 0.95);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -438,7 +438,6 @@
             transform: scale(1);
         }
 
-        /* Mensaje pedido por el usuario */
         .contenido-modal h2 {
             font-family: 'Playfair Display', serif;
             font-size: 2.2rem;
@@ -456,7 +455,6 @@
             display: block;
         }
 
-        /* Contenedor central para poner su imagen */
         .imagen-central-amor {
             width: 100%;
             max-height: 300px;
@@ -474,12 +472,15 @@
             display: block;
         }
 
-        /* Sección de puras flores abajo de la imagen */
-        .jardin-flores {
-            font-size: 1.8rem;
-            letter-spacing: 5px;
+        .contenedor-flores-efecto {
+            width: 100%;
             margin-bottom: 25px;
-            animation: latidoSutil 2s infinite alternate;
+        }
+
+        #jardin-flores-animado {
+            width: 100%;
+            height: 120px;
+            display: block;
         }
 
         /* Lluvia de corazones cayendo (Efecto Especial) */
@@ -501,10 +502,6 @@
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes latidoSutil {
-            from { transform: scale(1); }
-            to { transform: scale(1.05); }
         }
         @keyframes caerCorazon {
             to {
@@ -554,9 +551,9 @@
                 <div class="timeline-content">
                     <span class="timeline-date">Finales del 2018</span>
                     <h3>El día que todo comenzó</h3>
-                    <p>Fue una casualidad, pero la casualidad mas bonita que me pudo haber pasado, te conoci por un
-                        amigo, fue raro por que yo entraba a jugar jaja y alguien andaba peleando con mi amigo jajaja,
-                        empezamos a hablar y desde hay tuvimos una conexion increible, Te hacias la fuerte aunque eras muy amable.
+                    <p>Fue una casualidad, pero la casualidad más bonita que me pudo haber pasado. Te conocí por un
+                        amigo, fue raro porque yo entraba a jugar jaja y alguien andaba peleando con mi amigo jajaja.
+                        Empezamos a hablar y desde ahí tuvimos una conexión increíble. Te hacías la fuerte aunque eras muy amable.
                     </p>
                 </div>
             </div>
@@ -568,60 +565,60 @@
                 <div class="timeline-content">
                     <span class="timeline-date">2019</span>
                     <h3>Empezamos a hablar más</h3>
-                    <p>Los nervios me consumían, pero tu sonrisa hizo que todo el miedo desapareciera en un instante,
-                        yo no era de hablar mucho, muy poco podia hablarte, pero aún asi, a pesar de que no te hable, nunca
-                        perdimos conexion, no nos aburriamos y poco a poco empezamos a hacer mas cosas. Te convertiste en mi Mejor Amiga</p>
+                    <p>Los nervios me consumían, pero tu sonrisa hizo que todo el miedo desapareciera en un instante.
+                        Yo no era de hablar mucho, muy poco podía hablarte, pero aun así, a pesar de que no te hablé, nunca
+                        perdimos conexión; no nos aburríamos y poco a poco empezamos a hacer más cosas. Te convertiste en mi Mejor Amiga.</p>
                 </div>
             </div>
 
-             <div class="timeline-item">
+            <div class="timeline-item">
                 <div class="timeline-img">
                     <img src="4.png" alt="Momento 3">
                 </div>
                 <div class="timeline-content">
                     <span class="timeline-date">Inicios del 2020</span>
-                    <h3>Conociendonos</h3>
-                    <p>Jaja, empece a hablarte mas por micro y siempre que te hablaba te quedabas quieta, me daba risa por que hablabas y
-                        cuando yo empezaba a hablarte te quedabas callada para escucharme y luego escribirnos por whatsapp.
+                    <h3>Conociéndonos</h3>
+                    <p>Jaja, empecé a hablarte más por micro y siempre que te hablaba te quedabas quieta, me daba risa porque hablabas y
+                        cuando yo empezaba a hablarte te quedabas callada para escucharme y luego escribirnos por WhatsApp.
                     </p>
                 </div>
             </div>
 
-      <div class="timeline-item">
+            <div class="timeline-item">
                 <div class="timeline-img">
                     <img src="5.jpeg" alt="Momento 4">
                 </div>
                 <div class="timeline-content">
                     <span class="timeline-date">2021</span>
-                    <h3> Mi razón de ser contigo </h3>
-                    <p> Ya no solo era jugar por diversión, mi motivo de jugar te volviste tu, yo me habia aburrido del juego, pero siempre te veia
-                        y siempre sentia la necesidad de volver para estar a tu lado, siempre me sacabas una sonrisa y las risas nunca faltaban.
+                    <h3>Mi razón de ser contigo</h3>
+                    <p>Ya no solo era jugar por diversión, mi motivo de jugar te volviste tú. Yo me había aburrido del juego, pero siempre te veía
+                        y siempre sentía la necesidad de volver para estar a tu lado; siempre me sacabas una sonrisa y las risas nunca faltaban.
                     </p>
                 </div>
             </div>      
             
-                  <div class="timeline-item">
+            <div class="timeline-item">
                 <div class="timeline-img">
                     <img src="6.jpeg" alt="Momento 5">
                 </div>
                 <div class="timeline-content">
                     <span class="timeline-date">5 de Julio del 2022</span>
-                    <h3> Reencontrarnos por los números</h3>
-                    <p> Te encontre Denuevo, por destinos de la vida, nos volvimos a hablar, nos empezamos a contar más cosas, no hablabamos mucho esta vez pero habia conexion que no se rompia, por mas que
-                        nos distanciaramos mas, siempre volviamos uno a otro, eso siempre me gusto de nuestra amistad.
+                    <h3>Reencontrarnos por los números</h3>
+                    <p>Te encontré de nuevo, por destinos de la vida nos volvimos a hablar, nos empezamos a contar más cosas. No hablábamos mucho esta vez pero había una conexión que no se rompía; por más que
+                        nos distanciáramos más, siempre volvíamos uno al otro, eso siempre me gustó de nuestra amistad.
                     </p>
                 </div>
             </div>
 
-             <div class="timeline-item">
+            <div class="timeline-item">
                 <div class="timeline-img">
                     <img src="7.jpeg" alt="Momento 6">
                 </div>
                 <div class="timeline-content">
                     <span class="timeline-date">Mitades del 2023 a mitades del 2024</span>
                     <h3>Arrepentimiento</h3>
-                    <p> Me arrepenti, la malogre y fue el tiempo que mas me arrepenti y el momento donde menos me querias recibir, pero aún asi lo hiciste, te agradezco mucho por eso
-                        Gracias por que por mas que me fui, siempre estuviste ahi para mi.
+                    <p>Me arrepentí, la malogré y fue el tiempo que más me arrepentí y el momento donde menos me querías recibir, pero aun así lo hiciste, te agradezco mucho por eso.
+                        Gracias porque por más que me fui, siempre estuviste ahí para mí.</p>
                 </div>
             </div>
 
@@ -632,12 +629,12 @@
                 <div class="timeline-content">
                     <span class="timeline-date">2025</span>
                     <h3>Volver a intentarlo esta vez distinto</h3>
-                    <p> Volvimos a hablar, iniciando otra vez pero, esta vez era diferente, conocimos mas el lado del uno como del otro, cosas que no sabia verdaderamente de ti,
-                        las empece a aprender y me fui soltando mas contigo, como tu conmigo, desde ahi entendi que tambien como dijo sebastian yatra: Cuenta una leyenda, que todos nacemos
-                        con un hilo rojo, invisible, atado a la persona que amaremos por siempre, sin importar el tiempo, el lugar o las circunstancias, el hilo se podra estirar, contraer o enredar,
-                        pero jamas romperse. Empece a darme cuenta que lo que sentia no era mas que ser tu amigo, queria protegerte y empece por tratarte como mi hija o hermana aunque era una excusa jaja, por que tenia miedo a malograr lo nuestro.
-                </p>
-                    </div>
+                    <p>Volvimos a hablar, iniciando otra vez pero, esta vez era diferente, conocimos más el lado del uno como del otro, cosas que no sabía verdaderamente de ti,
+                        las empecé a aprender y me fui soltando más contigo, como tú conmigo. Desde ahí entendí que también como dijo Sebastián Yatra: Cuenta una leyenda, que todos nacemos
+                        con un hilo rojo, invisible, atado a la persona que amaremos por siempre, sin importar el tiempo, el lugar o las circunstancias; el hilo se podrá estirar, contraer o enredar,
+                        pero jamás romperse. Empecé a darme cuenta que lo que sentía no era más que ser tu amigo, quería protegerte y empecé por tratarte como mi hija o hermana aunque era una excusa jaja, porque tenía miedo a malograr lo nuestro.
+                    </p>
+                </div>
             </div>
 
             <div class="timeline-item">
@@ -645,12 +642,12 @@
                     <img src="1.png" alt="Momento 8">
                 </div>
                 <div class="timeline-content">
-                    <span class="timeline-date">06 deJunio del 2026</span>
+                    <span class="timeline-date">06 de Junio del 2026</span>
                     <h3>Nuestro Inicio</h3>
-                    <p> Tocamos el tema indirectamente, y al final nos dimos cuenta que ambos sentiamos lo mismo y asi fue como empezamos a salir, aunque estemos a distancia,
-                        siempre seras tu mi razon de ser feliz y por la cual siempre te voy a elegir. Te amo mi Reina
-                </p>
-                    </div>
+                    <p>Tocamos el tema indirectamente, y al final nos dimos cuenta que ambos sentíamos lo mismo y así fue como empezamos a salir. Aunque estemos a distancia,
+                        siempre serás tú mi razón de ser feliz y por la cual siempre te voy a elegir. Te amo mi Reina.
+                    </p>
+                </div>
             </div>
 
             <div class="timeline-item">
@@ -660,14 +657,12 @@
                 <div class="timeline-content">
                     <span class="timeline-date">06 de Julio del 2026</span>
                     <h3>Primer Mes Juntos</h3>
-                    <p> Nuestro Primer Mes Juntos, Y para toda una vida Juntos, y como te dije arriba, siempre estuviste para mi, como tu dices que yo para ti, pero esa vez te falle y ya no lo repetire jamas, Siempre seras mi prioridad y la razón para siempre estar a tu lado, en las buenas o en las malas. Con todo mi Corazón Te puedo decir TE AMO MI VIDA❤️
-                </p>
-                    </div>
+                    <p>Nuestro Primer Mes Juntos, y para toda una vida juntos. Y como te dije arriba, siempre estuviste para mí, como tú dices que yo para ti, pero esa vez te fallé y ya no lo repetiré jamás. Siempre serás mi prioridad y la razón para siempre estar a tu lado, en las buenas o en las malas. Con todo mi corazón te puedo decir: ¡TE AMO MI VIDA! ❤️
+                    </p>
+                </div>
             </div>
 
         </div>
-
-        
 
         <div class="contenedor-centrado">
             <button class="btn-accion" onclick="revelarSeccion('sec-carta')">Hay algo más para ti...</button>
@@ -703,6 +698,7 @@
             </div>
         </div>
     </section>
+
     <div class="modal-celebracion" id="modal-love">
         <div class="contenido-modal">
             <h2>Feliz 1 mes mi vida</h2>
